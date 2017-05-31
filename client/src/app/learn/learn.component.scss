@@ -1,0 +1,28 @@
+.panel {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.panel {
+  &-body {
+    margin-bottom: 15px;
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.left {
+  display: flex;
+}
+
+.lang {
+  margin-left: 10px;
+}
