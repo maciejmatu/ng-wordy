@@ -1,0 +1,18 @@
+.panel {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.panel {
+  &-body {
+    margin-bottom: 15px;
+  }
+
+  &-footer {
+    .list-group{
+      a{
+        cursor: pointer;
+      }
+    }
+  }
+}

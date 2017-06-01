@@ -1,0 +1,35 @@
+<div class="panel panel-default">
+  <div class="panel-heading"><h4>Translate given word</h4></div>
+  <div class="panel-body ">
+    <div class="row center-block">
+      <form class="col-xs-12 col-sm-8 col-sm-offset-2" (ngSubmit)='addNewWord()' [formGroup]='newWord'>
+        <div class="input-group col-xs-12">
+          <input type="text" class="form-control" placeholder="foreign word"
+                 [focus]='myFocusTriggeringEventEmitter'
+                 formControlName="foreignWord">
+        </div>
+        <div class="input-group col-xs-12">
+          <input type="text" class="form-control" placeholder="native word"
+                 formControlName="nativeWord">
+        </div>
+        <span class="input-group-btn">
+          <button class="btn btn-default col-xs-12" type="submit" [disabled]='!newWord.valid'>Submit</button>
+        </span>
+      </form>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <ul class="list-group ">
+      <a class="list-group-item list-group-item-info" [ngClass]='{"active": activeList}' (click)='toggleActiveList()'>
+        <span class="badge">{{wordList.length}}</span>
+        List word
+      </a>
+      <div *ngIf='activeList'>
+        <li class="list-group-item" *ngFor='let word of wordList'>
+          <p class="list-group-item-heading">{{word.foreignWord}}</p>
+          <p class="list-group-item-text">{{word.nativeWord}}</p>
+        </li>
+      </div>
+    </ul>
+  </div>
+</div>
