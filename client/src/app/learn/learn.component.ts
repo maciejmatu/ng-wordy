@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {IWord} from './learn.interface';
+import {Word} from './word';
 
 @Component({
   selector: 'app-learn',
@@ -7,24 +7,22 @@ import {IWord} from './learn.interface';
   styleUrls: ['./learn.component.scss']
 })
 export class LearnComponent implements OnInit {
-  wordList: IWord[] = [
+  wordList: Word[] = [
     {
-      'en': 'Dance',
-      'pl': 'Tańczyć'
+      'foreignWord': 'Dance',
+      'nativeWord': 'Tańczyć'
     },
     {
-      'en': 'Talk',
-      'pl': 'Mówić'
+      'foreignWord': 'Talk',
+      'nativeWord': 'Mówić'
     },
     {
-      'en': 'Walk',
-      'pl': 'Chodzić'
+      'foreignWord': 'Walk',
+      'nativeWord': 'Chodzić'
     },
   ];
   currentId: number = 0;
   langToggled: boolean = false;
-  nativeLang: string = 'en';
-  secondLang: string = 'pl';
 
   constructor() { }
 
@@ -32,11 +30,7 @@ export class LearnComponent implements OnInit {
   }
 
   toggleLanguage(): void {
-    let lang = this.nativeLang;
-
     this.langToggled = !this.langToggled;
-    this.nativeLang = this.secondLang;
-    this.secondLang = lang;
   }
 
   changeWord(num = 1): void {
@@ -46,7 +40,7 @@ export class LearnComponent implements OnInit {
   }
 
   onSubmit(value): void {
-    let currentWord = this.wordList[this.currentId][this.secondLang];
+    let currentWord = this.wordList[this.currentId][(!this.langToggled ? 'foreignWord' : 'nativeWord')]
 
     if (value.toLocaleLowerCase() === currentWord.toLocaleLowerCase()) {
       console.log('correct')
