@@ -1,8 +1,8 @@
 <div class="panel panel-default">
   <div class="panel-heading"><h4>Translate given word</h4></div>
   <div class="panel-body">
-    <h2>{{ wordList[currentId][lang] }}</h2>
-    <div class="input-group" [ngClass]='style'>
+    <h2>{{ wordList[currentId][nativeLang] }}</h2>
+    <div class="input-group">
       <input #word type="text" class="form-control">
       <span class="input-group-btn">
         <button class="btn btn-default" type="button" (click)='onSubmit(word.value)'>Submit</button>
@@ -14,11 +14,15 @@
       <button type="button" class="btn btn-info" (click)='toggleLanguage()'>
         <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
       </button>
-      <h6 class="lang">{{ lang + ' -> ' + secondLang }}</h6>
+      <h6 class="lang">{{ nativeLang + ' -> ' + secondLang }}</h6>
     </div>
     <div class="btn-group" role="group" aria-label="...">
-      <button type="button" class="btn btn-default" (click)='changeWord(-1)'>Prev</button>
-      <button type="button" class="btn btn-default" (click)='changeWord(1)'>Next</button>
+      <button type="button" class="btn btn-default"
+        [ngClass]='{"disabled": (currentId === 0)}'
+        (click)='changeWord(-1)'>Prev</button>
+      <button type="button" class="btn btn-default"
+        [ngClass]='{"disabled": (currentId === wordList.length - 1)}'
+        (click)='changeWord(1)'>Next</button>
     </div>
   </div>
 </div>

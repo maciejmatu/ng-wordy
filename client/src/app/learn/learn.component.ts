@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {IWord} from './learn.interface';
 
 @Component({
   selector: 'app-learn',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./learn.component.scss']
 })
 export class LearnComponent implements OnInit {
-  wordList: any[] = [
+  wordList: IWord[] = [
     {
       'en': 'Dance',
       'pl': 'Tańczyć'
@@ -21,7 +22,8 @@ export class LearnComponent implements OnInit {
     },
   ];
   currentId: number = 0;
-  lang: string = 'en';
+  langToggled: boolean = false;
+  nativeLang: string = 'en';
   secondLang: string = 'pl';
 
   constructor() { }
@@ -30,8 +32,10 @@ export class LearnComponent implements OnInit {
   }
 
   toggleLanguage(): void {
-    let lang = this.lang;
-    this.lang = this.secondLang;
+    let lang = this.nativeLang;
+
+    this.langToggled = !this.langToggled;
+    this.nativeLang = this.secondLang;
     this.secondLang = lang;
   }
 
@@ -44,7 +48,7 @@ export class LearnComponent implements OnInit {
   onSubmit(value): void {
     let currentWord = this.wordList[this.currentId][this.secondLang];
 
-    if (currentWord.toLowerCase() === value.toLowerCase()) {
+    if (value.toLocaleLowerCase() === currentWord.toLocaleLowerCase()) {
       console.log('correct')
     }
   }
