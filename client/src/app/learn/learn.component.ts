@@ -1,36 +1,35 @@
 import {Component, OnInit} from '@angular/core';
 import {Word} from '../models/word';
+import {WordListService} from "../services/wordList.service";
 
 @Component({
   selector: 'app-learn',
   templateUrl: './learn.component.html',
-  styleUrls: ['./learn.component.scss']
+  styleUrls: ['./learn.component.scss'],
+  providers: [
+    WordListService
+  ]
 })
 export class LearnComponent implements OnInit {
-  wordList: Word[] = [
-    {
-      'foreignWord': 'Dance',
-      'nativeWord': 'Tańczyć'
-    },
-    {
-      'foreignWord': 'Talk',
-      'nativeWord': 'Mówić'
-    },
-    {
-      'foreignWord': 'Walk',
-      'nativeWord': 'Chodzić'
-    },
-  ];
+  wordList: Word[] = [];
   currentId: number = 0;
   langToggled: boolean = false;
 
-  constructor() { }
+  constructor(private wordListService: WordListService) { }
 
   ngOnInit() {
+    this.wordListService.getData()
+      .subscribe((results) => {
+        this.wordList = results;
+      });
   }
 
   toggleLanguage(): void {
     this.langToggled = !this.langToggled;
+  }
+
+  showWordToGuess(){
+    return this.wordList[this.currentId] ? this.wordList[this.currentId][this.getLang(this.langToggled)] : ""
   }
 
   getLang(switched: boolean = false) {
