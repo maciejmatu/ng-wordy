@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+  <div class="panel-heading"><h4>Translate given word</h4></div>
+  <div class="panel-body">
+    <h2>{{ wordList[currentId][getLang(langToggled)] }}</h2>
+    <div class="input-group">
+      <input #word type="text" class="form-control">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" (click)='onSubmit(word.value)'>Submit</button>
+      </span>
+    </div>
+  </div>
+  <div class="panel-footer">
+    <div class="left">
+      <button type="button" class="btn btn-info" (click)='toggleLanguage()'>
+        <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="btn-group" role="group" aria-label="...">
+      <button type="button" class="btn btn-default"
+        [ngClass]='{"disabled": (currentId === 0)}'
+        (click)='changeWord(-1)'>Prev</button>
+      <button type="button" class="btn btn-default"
+        [ngClass]='{"disabled": (currentId === wordList.length - 1)}'
+        (click)='changeWord(1)'>Next</button>
+    </div>
+  </div>
+</div>
