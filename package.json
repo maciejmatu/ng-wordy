@@ -1,0 +1,15 @@
+{
+  "name": "ng-wordy",
+  "version": "0.0.1",
+  "description": "Application that simplifies learning new languages",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maciejmatu/ng-wordy.git"
+  },
+  "author": "Maciej Matuszewski, Daniel Karski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maciejmatu/ng-wordy/issues"
+  },
+  "homepage": "https://github.com/maciejmatu/ng-wordy#readme"
+}
