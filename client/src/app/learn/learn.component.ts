@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Word} from './word';
+import {Word} from '../models/word';
 
 @Component({
   selector: 'app-learn',
@@ -33,6 +33,10 @@ export class LearnComponent implements OnInit {
     this.langToggled = !this.langToggled;
   }
 
+  getLang(switched: boolean = false) {
+    return (switched) ? 'nativeWord' : 'foreignWord';
+  }
+
   changeWord(num = 1): void {
     let nextId = this.currentId + num;
 
@@ -40,7 +44,7 @@ export class LearnComponent implements OnInit {
   }
 
   onSubmit(value): void {
-    let currentWord = this.wordList[this.currentId][(!this.langToggled ? 'foreignWord' : 'nativeWord')]
+    let currentWord = this.wordList[this.currentId][this.getLang(!this.langToggled)];
 
     if (value.toLocaleLowerCase() === currentWord.toLocaleLowerCase()) {
       console.log('correct')
