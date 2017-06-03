@@ -2,34 +2,28 @@ import {Component, OnInit} from '@angular/core';
 import {EventEmitter} from "@angular/core";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {Word} from '../models/word';
+import {WordListService} from "../services/wordList.service";
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  styleUrls: ['./create.component.scss'],
+  providers: [
+    WordListService
+  ]
 })
 export class CreateComponent implements OnInit {
   newWord: FormGroup;
   activeList: boolean = false;
-  wordList: Word[] = [
-    {
-      'foreignWord': 'Dance',
-      'nativeWord': 'Tańczyć'
-    },
-    {
-      'foreignWord': 'Talk',
-      'nativeWord': 'Mówić'
-    },
-    {
-      'foreignWord': 'Walk',
-      'nativeWord': 'Chodzić'
-    },
-  ];
-  constructor(private fb: FormBuilder) {
+  wordList: Word[] = [];
+  constructor(private fb: FormBuilder,
+              private wordListService: WordListService) {
     this.createForm();
   }
 
   ngOnInit() {
+    this.wordListService.getData()
+      .subscribe((results) => { this.wordList = results });
   }
   public myFocusTriggeringEventEmitter = new EventEmitter<boolean>();
 
