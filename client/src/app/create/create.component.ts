@@ -40,6 +40,8 @@ export class CreateComponent implements OnInit {
 
   addNewWord() : void{
     this.wordList.unshift(this.newWord.value);
+    this.wordListService.postData(this.newWord.value)
+      .subscribe((results) => { console.log("Results for addNewWord: ", results) });
     this.createForm();
     this.myFocusTriggeringEventEmitter.emit(true);
   }
