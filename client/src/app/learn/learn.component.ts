@@ -5,24 +5,20 @@ import {WordListService} from "../services/wordList.service";
 @Component({
   selector: 'app-learn',
   templateUrl: './learn.component.html',
-  styleUrls: ['./learn.component.scss'],
-  providers: [
-    WordListService
-  ]
+  styleUrls: ['./learn.component.scss']
 })
 export class LearnComponent implements OnInit {
-  wordList: Word[] = [];
+  wordList: Word[];
   currentId: number = 0;
   langToggled: boolean = false;
 
-  constructor(private wordListService: WordListService) { }
-
-  ngOnInit() {
-    this.wordListService.getData()
-      .subscribe((results) => {
-        this.wordList = results;
-      });
+  constructor(private wordListService: WordListService) {
+    this.wordListService.wordList$.subscribe( results =>{
+      this.wordList = results;
+    });
   }
+
+  ngOnInit() {}
 
   toggleLanguage(): void {
     this.langToggled = !this.langToggled;

@@ -7,24 +7,24 @@ import {WordListService} from "../services/wordList.service";
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss'],
-  providers: [
-    WordListService
-  ]
+  styleUrls: ['./create.component.scss']
 })
+
 export class CreateComponent implements OnInit {
   newWord: FormGroup;
   activeList: boolean = false;
-  wordList: Word[] = [];
+  wordList: Word[];
+
   constructor(private fb: FormBuilder,
               private wordListService: WordListService) {
     this.createForm();
+    this.wordListService.wordList$.subscribe( results =>{
+      this.wordList = results;
+    });
   }
 
-  ngOnInit() {
-    this.wordListService.getData()
-      .subscribe((results) => { this.wordList = results });
-  }
+  ngOnInit() {}
+
   public myFocusTriggeringEventEmitter = new EventEmitter<boolean>();
 
   createForm() {
@@ -39,9 +39,7 @@ export class CreateComponent implements OnInit {
   }
 
   addNewWord() : void{
-    this.wordList.unshift(this.newWord.value);
-    this.wordListService.postData(this.newWord.value)
-      .subscribe((results) => { console.log("Results for addNewWord: ", results) });
+    this.wordListService.postData(this.newWord.value);
     this.createForm();
     this.myFocusTriggeringEventEmitter.emit(true);
   }
