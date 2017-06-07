@@ -15,7 +15,7 @@ export class Server {
 
 	constructor() {
 		this.app = express();
-		this.config();
+		this.configure();
 		this.middleware();
 		this.api();
 	}
@@ -26,7 +26,7 @@ export class Server {
 	 * @class Server
 	 * @method config
 	 */
-	public config() {
+	public configure() {
 		mongoose.connect(config.database);
 
 		this.app.set('port', config.port);
