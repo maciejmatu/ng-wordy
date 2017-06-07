@@ -12,11 +12,18 @@
             "es6",
             "dom"
         ],
+        "typeRoots": ["./node_modules/@types"],
         "types": [
-//            "reflect-metadata"
+            //"reflect-metadata"
         ],
         "moduleResolution": "node",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true
-    }
+    },
+    "include": [
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }

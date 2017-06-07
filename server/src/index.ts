@@ -1,12 +1,10 @@
-import * as express from "express";
-import * as bodyParser from "body-parser";
-import * as path from "path";
+import * as express from 'express';
+import * as bodyParser from 'body-parser';
+import * as mongoose from 'mongoose';
+import * as cors from 'cors';
 
-const mongoose = require('mongoose');
-const config = require('./config/main');
-const api = require('./routes/api');
-const DIST = '../../client/dist';
-const INDEX = '/index.html';
+import api from './routes/api';
+import config from './config/main';
 
 export class Server {
 	public app: express.Application;
@@ -16,33 +14,10 @@ export class Server {
 	}
 
 	constructor() {
-		//create expressjs application
 		this.app = express();
-
-		//configure application
 		this.config();
-
-		//add routes
-		this.routes();
-
-		//add api
+		this.middleware();
 		this.api();
-	}
-
-	/**
-	 * Create REST API routes
-	 *
-	 * @class Server
-	 * @method api
-	 */
-	public api() {
-		// Set our api routes
-		this.app.use('/api', api);
-
-		// Catch all other routes and return the index file
-		this.app.get('*', (req, res) => {
-			res.sendFile(path.join(__dirname, DIST + INDEX));
-		});
 	}
 
 	/**
@@ -52,30 +27,37 @@ export class Server {
 	 * @method config
 	 */
 	public config() {
-		/* DATABASE */
 		mongoose.connect(config.database);
 
-		// Parsers for POST data
-		this.app.use(bodyParser.json());
-		this.app.use(bodyParser.urlencoded({extended: false}));
-
-		this.app.use(express.static(path.join(__dirname, DIST)));
-
-		let port = config.port;
-		this.app.set('port', port);
-		this.app.listen(port, _ => console.log(`API running on localhost:${port}`));
+		this.app.set('port', config.port);
+		this.app.listen(config.port, _ => console.log(`API running on http://${config.serverHost}:${config.port}`));
 	}
 
 	/**
-	 * Create router
+	 * Create REST API routes
 	 *
 	 * @class Server
 	 * @method api
 	 */
-	public routes() {
+	public api() {
+		this.app.use('/api', api);
 
+		this.app.get('*', (req, res) => {
+			res.json({'message': 'Welcome to Wordy REST Api'});
+		});
 	}
 
+	/**
+	 * Add express middleware
+	 *
+	 * @class Server
+	 * @method api
+	 */
+	public middleware() {
+		this.app.use(bodyParser.json());
+		this.app.use(bodyParser.urlencoded({ extended: false }));
+		this.app.use(cors({ origin: config.clientURL }));
+	}
 }
 
 Server.bootstrap();
