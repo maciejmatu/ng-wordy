@@ -28,3 +28,10 @@ In backend part we use:
 ## Typescript
 We try to follow this typescript style guide, to maintain clean code:<br>
 [Basarat Typescript Style Guide](https://basarat.gitbooks.io/typescript/docs/styleguide/styleguide.html)
+
+## Development
+In order to develop application, one must run "npm start" from 'client' and from 'server' directory.
+It will start frontend and backend development servers that talk to each other.
+
+Client will be run on htpp://localhost:9000
+Server will be run on http://localhost:9001
