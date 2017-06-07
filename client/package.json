@@ -12,7 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular-redux/store": "^6.4.1",
+    "@angular-redux/store": "^6.4.3",
     "@angular/common": "^2.4.0",
     "@angular/compiler": "^2.4.0",
     "@angular/core": "^2.4.0",

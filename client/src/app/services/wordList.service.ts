@@ -21,7 +21,7 @@ export class WordListService {
   }
 
   getData(){
-    this.http.get(`${API_URL}/listWord`)
+    this.http.get(`${API_URL}/word/list`)
       .map((res: Response) => res.json()).subscribe(data => {
         this.dataStore.wordList = data;
         this.wordList.next(Object.assign({}, this.dataStore).wordList);
@@ -31,7 +31,7 @@ export class WordListService {
   postData(word: Word) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    this.http.post(`${API_URL}/newWord`,{ word }, options)
+    this.http.post(`${API_URL}/word/add`,{ word }, options)
       .map((res: Response) => res.json()).subscribe(data => {
         this.dataStore.wordList.push(data);
         this.wordList.next(Object.assign({}, this.dataStore).wordList);
