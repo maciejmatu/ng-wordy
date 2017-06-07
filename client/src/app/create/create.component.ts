@@ -3,6 +3,7 @@ import {EventEmitter} from "@angular/core";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {Word} from '../models/word';
 import {WordListService} from "../services/wordList.service";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-create',
@@ -10,17 +11,17 @@ import {WordListService} from "../services/wordList.service";
   styleUrls: ['./create.component.scss']
 })
 
+
+
 export class CreateComponent implements OnInit {
+  wordList: Observable<Word[]>;
   newWord: FormGroup;
   activeList: boolean = false;
-  wordList: Word[];
 
   constructor(private fb: FormBuilder,
               private wordListService: WordListService) {
     this.createForm();
-    this.wordListService.wordList$.subscribe( results =>{
-      this.wordList = results;
-    });
+    this.wordList = this.wordListService.wordList$;
   }
 
   ngOnInit() {}

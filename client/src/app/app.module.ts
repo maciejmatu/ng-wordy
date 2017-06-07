@@ -11,6 +11,7 @@ import {LoginComponent} from "./login/login.component";
 import {LearnComponent} from './learn/learn.component';
 import { CreateComponent } from './create/create.component';
 import { FocusDirective } from './focus.directive';
+import {ReversePipe} from "./pipes/reverse.pipe";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { FocusDirective } from './focus.directive';
     LearnComponent,
     CreateComponent,
     FocusDirective,
+    ReversePipe,
   ],
   imports: [
     ReactiveFormsModule,
