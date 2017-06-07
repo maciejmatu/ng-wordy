@@ -21,11 +21,11 @@
   <div class="panel-footer">
     <ul class="list-group ">
       <a class="list-group-item list-group-item-info" [ngClass]='{"active": activeList}' (click)='toggleActiveList()'>
-        <span class="badge">{{wordList.length}}</span>
+        <span class="badge">{{(wordList | async)?.length}}</span>
         List word
       </a>
       <div *ngIf='activeList'>
-        <li class="list-group-item" *ngFor='let word of wordList'>
+        <li class="list-group-item" *ngFor='let word of wordList | reverse | async'>
           <p class="list-group-item-heading">{{word.foreignWord}}</p>
           <p class="list-group-item-text">{{word.nativeWord}}</p>
         </li>
