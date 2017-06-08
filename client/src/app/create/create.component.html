@@ -1,35 +1,30 @@
-<div class="panel panel-default">
-  <div class="panel-heading"><h4>Translate given word</h4></div>
-  <div class="panel-body ">
-    <div class="row center-block">
-      <form class="col-xs-12 col-sm-8 col-sm-offset-2" (ngSubmit)='addNewWord()' [formGroup]='newWord'>
-        <div class="input-group col-xs-12">
-          <input type="text" class="form-control" placeholder="foreign word"
-                 [focus]='myFocusTriggeringEventEmitter'
-                 formControlName="foreignWord">
+<div class="row">
+  <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12 custom-col">
+    <div class="card">
+      <div class="card-header"><h4 class="custom-title">Create new set</h4></div>
+      <div class="card-block custom-block">
+        <div class="card-text custom-text col-12">
+          <form (ngSubmit)='addNewWord()' [formGroup]='newWord'>
+            <input type="text" class="form-control custom-text-input" placeholder="Type foreign word..."
+                [focus]='myFocusTriggeringEventEmitter'
+                formControlName="foreignWord">
+            <input type="text" class="form-control custom-text-input" placeholder="Translation..."
+                formControlName="nativeWord">
+              <button class="btn btn-primary btn-block" type="submit" [disabled]='!newWord.valid'>Submit</button>
+          </form>
         </div>
-        <div class="input-group col-xs-12">
-          <input type="text" class="form-control" placeholder="native word"
-                 formControlName="nativeWord">
-        </div>
-        <span class="input-group-btn">
-          <button class="btn btn-default col-xs-12" type="submit" [disabled]='!newWord.valid'>Submit</button>
-        </span>
-      </form>
-    </div>
-  </div>
-  <div class="panel-footer">
-    <ul class="list-group ">
-      <a class="list-group-item list-group-item-info" [ngClass]='{"active": activeList}' (click)='toggleActiveList()'>
-        <span class="badge">{{(wordList | async)?.length}}</span>
-        List word
-      </a>
-      <div *ngIf='activeList'>
-        <li class="list-group-item" *ngFor='let word of wordList | reverse | async'>
-          <p class="list-group-item-heading">{{word.foreignWord}}</p>
-          <p class="list-group-item-text">{{word.nativeWord}}</p>
-        </li>
       </div>
-    </ul>
+      <div class="card-footer custom-footer">
+        <clr-stack-view>
+          <clr-stack-block [clrSbExpanded]='activeList' [clrSbExpandable]='true' (click)='toggleActiveList()'>
+            <clr-stack-label>Current Set <span class="badge badge-purple">{{ (wordList | async)?.length }}</span></clr-stack-label>
+            <clr-stack-block *ngFor='let word of wordList | reverse | async'>
+              <clr-stack-label>{{ word.foreignWord }}</clr-stack-label>
+              <clr-stack-content>{{ word.nativeWord }}</clr-stack-content>
+            </clr-stack-block>
+          </clr-stack-block>
+        </clr-stack-view>
+      </div>
+    </div>
   </div>
 </div>
