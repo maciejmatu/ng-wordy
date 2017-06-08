@@ -16,3 +16,38 @@
     }
   }
 }
+
+
+.row .custom {
+
+  &-col {
+    margin: 0 auto;
+    max-width: 600px;
+  }
+
+  &-title {
+    font-weight: 500;
+    margin: 6px 0;
+  }
+
+  &-block {
+    padding-bottom: 30px;
+  }
+
+  &-footer {
+
+  }
+
+  &-text {
+
+    &-button {
+      margin: 0;
+    }
+
+    &-input {
+      width: 100%;
+      padding: 18px 6px;
+      margin-bottom: 18px;
+    }
+  }
+}

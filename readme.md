@@ -8,6 +8,9 @@ Front-end and back-end will be separated. Backend will work as a REST Api, and f
 ## Git Workflow
 Currently we are using the [feature branch workflow](https://www.atlassian.com/git/tutorials/comparing-workflows#feature-branch-workflow)
 
+## User Interface
+To boost development speed, we decided to use [Clarity UI framework](https://vmware.github.io/clarity/documentation)
+
 ## Frontend
 In frontend part of this application we use:
 - angular

@@ -27,6 +27,8 @@ export class Server {
 	 * @method config
 	 */
 	public configure() {
+		// overwrite deprecated mongoose promise library
+		(<any>mongoose).Promise = global.Promise;
 		mongoose.connect(config.database);
 
 		this.app.set('port', config.port);
