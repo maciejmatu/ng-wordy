@@ -1,27 +1,34 @@
 import {Component, OnInit} from '@angular/core';
 import {EventEmitter} from "@angular/core";
 import {FormGroup, FormBuilder, Validators} from "@angular/forms";
-import {Word} from '../models/word';
+import {CreateWord} from '../models/word';
 import {WordListService} from "../services/wordList.service";
-import {Observable} from "rxjs";
+
 
 @Component({
+  host: {
+    '(document:click)': 'onClick($event)',
+  },
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
 
-
-
 export class CreateComponent implements OnInit {
-  wordList: Observable<Word[]>;
+  wordList: CreateWord[];
   newWord: FormGroup;
   activeList: boolean = false;
+  clickedWord: boolean = false;
 
   constructor(private fb: FormBuilder,
               private wordListService: WordListService) {
     this.createForm();
-    this.wordList = this.wordListService.wordList$;
+
+    this.wordListService.wordList$
+      .subscribe(results => {
+        let wordList = results.slice().reverse();
+        this.wordList = wordList.map(item => Object.assign({},item, {edit: false}));
+      });
   }
 
   ngOnInit() {}
@@ -43,5 +50,26 @@ export class CreateComponent implements OnInit {
     this.wordListService.postData(this.newWord.value);
     this.createForm();
     this.myFocusTriggeringEventEmitter.emit(true);
+  }
+
+  handleEditEvent(word){
+    this.clickedWord = true;
+    if(word.edit) return;
+    this.setAllWordEditFalse();
+    word.edit = true;
+  }
+
+  onClick(event){
+    if(this.clickedWord){
+      this.clickedWord = false;
+      return
+    }else{
+      this.setAllWordEditFalse();
+    }
+
+  }
+
+  private setAllWordEditFalse(){
+    this.wordList.map(item => item.edit = false);
   }
 }

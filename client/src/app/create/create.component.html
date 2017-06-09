@@ -15,15 +15,15 @@
         </div>
       </div>
       <div class="card-footer custom-footer">
-        <clr-stack-view>
-          <clr-stack-block [clrSbExpanded]='activeList' [clrSbExpandable]='true' (click)='toggleActiveList()'>
-            <clr-stack-label>Current Set <span class="badge badge-purple">{{ (wordList | async)?.length }}</span></clr-stack-label>
-            <clr-stack-block *ngFor='let word of wordList | reverse | async'>
-              <clr-stack-label>{{ word.foreignWord }}</clr-stack-label>
-              <clr-stack-content>{{ word.nativeWord }}</clr-stack-content>
-            </clr-stack-block>
-          </clr-stack-block>
-        </clr-stack-view>
+        <dl class="stack-view">
+          <div class="stack-block stack-block-expandable" ngClass='{"stack-block-expanded": activeList}'>
+            <dt class="stack-block-label" (click)='toggleActiveList()'>Current Set <span class="badge badge-purple">{{ wordList.length }}</span></dt>
+            <dd class="stack-block-content"></dd>
+            <div class="stack-children" *ngIf='activeList'>
+                <app-word class="stack-block" *ngFor='let word of wordList' [word]='word' (editEvent)='handleEditEvent($event)'></app-word>
+            </div>
+          </div>
+        </dl>
       </div>
     </div>
   </div>
