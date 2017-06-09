@@ -3,3 +3,7 @@ export interface Word {
   nativeWord: string,
   id: string
 }
+
+export interface CreateWord extends Word {
+  edit: boolean;
+}

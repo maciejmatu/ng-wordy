@@ -18,6 +18,7 @@ import { ReversePipe } from "./pipes/reverse.pipe";
 
 import { rootReducer, AppState, INITIAL_STATE } from './store';
 import { LearnActions } from './learn/learn.actions';
+import { WordComponent } from './word/word.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { LearnActions } from './learn/learn.actions';
     CreateComponent,
     FocusDirective,
     ReversePipe,
+    WordComponent,
   ],
   imports: [
     ReactiveFormsModule,
