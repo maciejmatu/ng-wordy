@@ -1,18 +1,15 @@
 import {Component, OnInit} from '@angular/core';
-import {EventEmitter} from "@angular/core";
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {EventEmitter} from '@angular/core';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {Word} from '../models/word';
-import {WordListService} from "../services/wordList.service";
-import {Observable} from "rxjs";
+import {WordListService} from '../services/wordList.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-
-
-
 export class CreateComponent implements OnInit {
   wordList: Observable<Word[]>;
   newWord: FormGroup;

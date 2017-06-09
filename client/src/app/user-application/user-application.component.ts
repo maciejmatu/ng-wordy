@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Router } from "@angular/router";
-import {WordListService} from "../services/wordList.service";
-import {Word} from "../models/word";
+import {Router } from '@angular/router';
+import {WordListService} from '../services/wordList.service';
+import {Word} from '../models/word';
 
 @Component({
   selector: 'app-user-application',
