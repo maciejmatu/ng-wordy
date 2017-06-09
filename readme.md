@@ -36,5 +36,5 @@ We try to follow this typescript style guide, to maintain clean code:<br>
 In order to develop application, one must run "npm start" from 'client' and from 'server' directory.
 It will start frontend and backend development servers that talk to each other.
 
-Client will be run on htpp://localhost:9000
+Client will be run on http://localhost:9000
 Server will be run on http://localhost:9001
