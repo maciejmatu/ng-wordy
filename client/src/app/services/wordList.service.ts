@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Http, Response, Headers, RequestOptions} from '@angular/http';
 import {Word} from '../models/word';
-import {Observable, Subject, BehaviorSubject} from "rxjs";
-import {API_URL} from "../config";
+import {Observable, Subject, BehaviorSubject} from 'rxjs';
+import {API_URL} from '../config';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 

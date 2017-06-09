@@ -1,31 +1,46 @@
-import {Component, OnInit} from '@angular/core';
-import {Word} from '../models/word';
-import {WordListService} from "../services/wordList.service";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Word } from '../models/word';
+import { WordListService } from '../services/wordList.service';
+import { NgRedux } from '@angular-redux/store';
+import { LearnActions } from './learn.actions';
+import { AppState } from '../store';
 
 @Component({
   selector: 'app-learn',
   templateUrl: './learn.component.html',
   styleUrls: ['./learn.component.scss']
 })
-export class LearnComponent implements OnInit {
+export class LearnComponent implements OnInit, OnDestroy {
+  subscription;
   wordList: Word[];
   currentId: number = 0;
-  langToggled: boolean = false;
+  langToggled: boolean;
 
-  constructor(private wordListService: WordListService) {
+  constructor(private wordListService: WordListService,
+    private ngRedux: NgRedux<AppState>,
+    private actions: LearnActions) {
+
+    this.subscription = this.ngRedux.select<boolean>('langToggled')
+      .subscribe(toggled => this.langToggled = toggled);
+
     this.wordListService.wordList$.subscribe( results =>{
       this.wordList = results;
     });
+
   }
 
   ngOnInit() {}
 
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
   toggleLanguage(): void {
-    this.langToggled = !this.langToggled;
+    this.ngRedux.dispatch(this.actions.toggleLang());
   }
 
   showWordToGuess(){
-    return this.wordList[this.currentId] ? this.wordList[this.currentId][this.getLang(this.langToggled)] : ""
+    return this.wordList[this.currentId] ? this.wordList[this.currentId][this.getLang(this.langToggled)] : '';
   }
 
   getLang(switched: boolean = false) {
