@@ -1,0 +1,33 @@
+.mod-default, .mod-edit{
+  width: 100%;
+  dt{
+    &:before{
+      display: none;
+    }
+  }
+}
+
+.mod-edit{
+  background-color: #fff;
+  input{
+    padding: 0;
+  }
+  &__form{
+    width: 100%;
+    padding: 0;
+    box-shadow: none !important;
+  }
+  &__panel{
+    width: 100%;
+    padding: 6px 24px;
+  }
+  &__cancel{
+
+  }
+  &__save{
+
+  }
+  &__remove{
+
+  }
+}
