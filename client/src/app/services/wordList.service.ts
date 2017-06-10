@@ -12,6 +12,8 @@ export class WordListService {
   private dataStore: {
     wordList: Word[]
   };
+  private dataStashToUpDate: Word[] = [];
+  private dataStashToRemove: string[] = [];
 
   constructor(private wordListRestService: WordListRestService) {
     this.dataStore = { wordList: [] };
@@ -37,13 +39,37 @@ export class WordListService {
     this.dataStore.wordList = this.dataStore.wordList
       .map(item => (item.id == word.id) ? word : item);
 
+    this.dataStore.wordList
+      .filter(item => {
+        if(item.id == word.id) this.dataStashToUpDate.push(item)
+      });
+
     this.wordList.next(Object.assign({}, this.dataStore).wordList);
   }
 
   removeWordInDataStore(id: string){
+    this.dataStore.wordList
+      .filter(item => {
+        if(item.id == id) this.dataStashToRemove.push(id)
+      });
+
     this.dataStore.wordList = this.dataStore.wordList
       .filter(item => item.id != id);
 
     this.wordList.next(Object.assign({}, this.dataStore).wordList);
+  }
+
+  updateData(){
+    this.wordListRestService.updateData(this.dataStashToUpDate).subscribe(data => {
+      console.log(data);
+    });
+    this.dataStashToUpDate = [];
+  }
+
+  removeData(){
+    this.wordListRestService.removeData(this.dataStashToRemove).subscribe(data => {
+      console.log(data);
+    });
+    this.dataStashToRemove = [];
   }
 }
