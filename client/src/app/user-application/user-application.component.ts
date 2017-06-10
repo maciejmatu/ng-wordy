@@ -25,6 +25,10 @@ export class UserApplicationComponent implements OnInit{
   ngOnInit() {
     this.wordListService.getData()
   }
+  updateAndRemove(){
+    this.wordListService.updateData();
+    this.wordListService.removeData();
+  }
 
   menuToggle(){
     this.active = !this.active;
