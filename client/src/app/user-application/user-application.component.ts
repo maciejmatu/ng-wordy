@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {Router } from "@angular/router";
-import {WordListService} from "../services/wordList.service";
-import {Word} from "../models/word";
+import {Router } from '@angular/router';
+import {WordListService} from '../services/wordList.service';
+import {WordListRestService} from '../services/wordListRest.service';
 
 @Component({
   selector: 'app-user-application',
   templateUrl: 'user-application.component.html',
   styleUrls: ['user-application.component.scss'],
   providers: [
+    WordListRestService,
     WordListService
   ]
 })
