@@ -33,4 +33,17 @@ export class WordListService {
       });
   }
 
+  updateWordInDataStore(word: Word){
+    this.dataStore.wordList = this.dataStore.wordList
+      .map(item => (item.id == word.id) ? word : item);
+
+    this.wordList.next(Object.assign({}, this.dataStore).wordList);
+  }
+
+  removeWordInDataStore(id: string){
+    this.dataStore.wordList = this.dataStore.wordList
+      .filter(item => item.id != id);
+
+    this.wordList.next(Object.assign({}, this.dataStore).wordList);
+  }
 }
