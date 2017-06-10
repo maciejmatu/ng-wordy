@@ -54,8 +54,8 @@ router.delete('/word/list', (req: Request, res: Response) => {
 
     function removeList(){
         return new Promise((resolve)=>{
-            deleteList.forEach((word, index) => {
-                WordModel.findOne({id: word.id}, null, {limit: 1})
+            deleteList.forEach((id, index) => {
+                WordModel.findOne({id: id}, null, {limit: 1})
                     .then((word: Word) => {
                         word.remove();
                         if(index == deleteList.length - 1) resolve()
