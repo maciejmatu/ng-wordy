@@ -1,0 +1,30 @@
+<div class="stack-block mod-default" *ngIf='!word.edit' (click)='toggleEdit()'>
+  <dt class="stack-block-label">{{ word.foreignWord }}</dt>
+  <dd class="stack-block-content" (click)='toggleEdit()'>{{ word.nativeWord }}</dd>
+</div>
+<div class="mod-edit" *ngIf='word.edit' (click)='toggleEdit()'>
+  <form class="stack-block mod-edit__form"
+        (ngSubmit)='save()' [formGroup]='updateWord'>
+    <dt class="stack-block-label">
+      <input type="text" class="form-control custom-text-input"
+             formControlName='foreignWord'
+             placeholder="{{word.foreignWord}}">
+    </dt>
+    <dt class="stack-block-content">
+      <input type="text" class="form-control custom-text-input"
+             formControlName='nativeWord'
+             placeholder="{{word.nativeWord}}">
+      <button class="btn btn-sm btn-success mod-edit__save"
+              type="submit" [disabled]='!updateWord.valid'>Save</button>
+
+    </dt>
+  </form>
+  <div class="stack-block mod-edit__panel">
+    <button class="btn btn-sm btn-outline mod-edit__cancel"
+            (click)='cancel()'>Cancel</button>
+    <button class="btn btn-sm btn-warning-outline mod-edit__remove"
+            (click)='remove()'>
+      <clr-icon shape="trash"></clr-icon>
+    </button>
+  </div>
+</div>
