@@ -52,15 +52,26 @@ router.delete('/word/list', (req: Request, res: Response) => {
         return res.status(400).json({'error': 'Bad Data'});
     }
 
-    for (let i = 0; i < deleteList.length; i++) {
-        WordModel.findOne({id:deleteList[i].id})
-            .then((word: Word) => word.remove())
-            .catch(err => res.send(err))
+    function removeList(){
+        return new Promise((resolve)=>{
+            deleteList.forEach((word, index) => {
+                WordModel.findOne({id: word.id}, null, {limit: 1})
+                    .then((word: Word) => {
+                        word.remove();
+                        if(index == deleteList.length - 1) resolve()
+                    })
+                    .catch(err => res.send(err));
+            });
+
+        })
     }
 
-    WordModel.find()
-        .then((words: Word[]) => res.json(words))
-        .catch(err => res.send(err));
+    removeList().then(() => {
+        WordModel.find()
+            .then((words: Word[]) => res.json(words))
+            .catch(err => res.send(err))
+    });
+
 });
 
 export default router;
