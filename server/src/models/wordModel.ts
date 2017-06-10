@@ -2,7 +2,8 @@ import { Document, Schema, model } from 'mongoose';
 
 export interface Word extends Document {
     foreignWord: string,
-    nativeWord: string
+    nativeWord: string,
+    id: string
 }
 
 const WordSchema: Schema = new Schema({
@@ -11,6 +12,10 @@ const WordSchema: Schema = new Schema({
         required: true
     },
     nativeWord: {
+        type: String,
+        required: true
+    },
+    id: {
         type: String,
         required: true
     }

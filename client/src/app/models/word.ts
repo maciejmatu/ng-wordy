@@ -1,4 +1,5 @@
 export interface Word {
   foreignWord: string,
-  nativeWord: string
+  nativeWord: string,
+  id: string
 }

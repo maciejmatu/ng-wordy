@@ -1,5 +1,6 @@
 import {Router, Request, Response} from 'express';
 import WordModel, {Word} from '../models/wordModel';
+import * as mongoose from 'mongoose';
 
 const router: Router = Router();
 
@@ -18,7 +19,8 @@ router.post('/word/add', (req: Request, res: Response) => {
 
     let word = new WordModel({
         foreignWord: newWord.foreignWord,
-        nativeWord: newWord.nativeWord
+        nativeWord: newWord.nativeWord,
+        id: new mongoose.Types.ObjectId
     });
 
     word.save()
@@ -34,7 +36,7 @@ router.put('/word/list', (req: Request, res: Response) => {
     }
 
     for (let i = 0; i < updatedList.length; i++) {
-        WordModel.update({'_id': updatedList[i].id}, updatedList[i])
+        WordModel.update({'id': updatedList[i].id}, updatedList[i])
             .catch(err => res.send(err));
     }
 
@@ -51,7 +53,7 @@ router.delete('/word/list', (req: Request, res: Response) => {
     }
 
     for (let i = 0; i < deleteList.length; i++) {
-        WordModel.findById(deleteList[i].id)
+        WordModel.findOne({id:deleteList[i].id})
             .then((word: Word) => word.remove())
             .catch(err => res.send(err))
     }
