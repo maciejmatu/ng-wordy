@@ -1,6 +1,7 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {CreateWord} from '../models/word';
 import {FormBuilder, FormGroup} from '@angular/forms';
+import {WordListService} from '../services/wordList.service';
 
 @Component({
   selector: 'app-word',
@@ -13,7 +14,8 @@ export class WordComponent implements OnInit {
   @Output() editEvent: EventEmitter<CreateWord> = new EventEmitter<CreateWord>();
   updateWord: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private wordListService: WordListService) {
     this.createForm();
   }
 
@@ -33,6 +35,9 @@ export class WordComponent implements OnInit {
 
   save(){
     this.word.edit = false;
+    this.word.foreignWord = this.updateWord.value.foreignWord || this.word.foreignWord;
+    this.word.nativeWord = this.updateWord.value.nativeWord || this.word.nativeWord;
+    this.wordListService.updateWordInDataStore(this.word);
     this.createForm();
   }
 
@@ -42,6 +47,6 @@ export class WordComponent implements OnInit {
   }
 
   remove(){
-
+    this.wordListService.removeWordInDataStore(this.word.id);
   }
 }
