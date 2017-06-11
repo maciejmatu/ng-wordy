@@ -35,38 +35,38 @@ export class WordListService {
       });
   }
 
-  updateWordInDataStore(word: Word){
+  updateWordInDataStore(word: Word) {
     this.dataStore.wordList = this.dataStore.wordList
-      .map(item => (item.id == word.id) ? word : item);
+      .map(item => (item.id === word.id) ? word : item);
 
     this.dataStore.wordList
       .filter(item => {
-        if(item.id == word.id) this.dataStashToUpDate.push(item)
+        if (item.id === word.id) this.dataStashToUpDate.push(item);
       });
 
     this.wordList.next(Object.assign({}, this.dataStore).wordList);
   }
 
-  removeWordInDataStore(id: string){
+  removeWordInDataStore(id: string) {
     this.dataStore.wordList
       .filter(item => {
-        if(item.id == id) this.dataStashToRemove.push(id)
+        if (item.id === id) this.dataStashToRemove.push(id);
       });
 
     this.dataStore.wordList = this.dataStore.wordList
-      .filter(item => item.id != id);
+      .filter(item => item.id !== id);
 
     this.wordList.next(Object.assign({}, this.dataStore).wordList);
   }
 
-  updateData(){
+  updateData() {
     this.wordListRestService.updateData(this.dataStashToUpDate).subscribe(data => {
       console.log(data);
     });
     this.dataStashToUpDate = [];
   }
 
-  removeData(){
+  removeData() {
     this.wordListRestService.removeData(this.dataStashToRemove).subscribe(data => {
       console.log(data);
     });

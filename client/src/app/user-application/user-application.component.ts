@@ -24,7 +24,7 @@ export class UserApplicationComponent implements OnInit {
   ngOnInit() {
     this.wordListService.getData();
   }
-  updateAndRemove(){
+  updateAndRemove() {
     this.wordListService.updateData();
     this.wordListService.removeData();
   }
