@@ -7,14 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgRedux, NgReduxModule } from '@angular-redux/store';
 
 import { AppComponent } from './app.component';
-import { UserApplicationRoutingModule } from "./user-application/user-application-routing.module";
-import { AppRoutingModule } from "./app-routing/app-routing.module";
-import { UserApplicationComponent } from "./user-application/user-application.component";
-import { LoginComponent } from "./login/login.component";
+import { UserApplicationRoutingModule } from './user-application/user-application-routing.module';
+import { AppRoutingModule } from './app-routing/app-routing.module';
+import { UserApplicationComponent } from './user-application/user-application.component';
+import { LoginComponent } from './login/login.component';
 import { LearnComponent } from './learn/learn.component';
 import { CreateComponent } from './create/create.component';
 import { FocusDirective } from './focus.directive';
-import { ReversePipe } from "./pipes/reverse.pipe";
+import { ReversePipe } from './pipes/reverse.pipe';
 
 import { rootReducer, AppState, INITIAL_STATE } from './store';
 import { LearnActions } from './learn/learn.actions';

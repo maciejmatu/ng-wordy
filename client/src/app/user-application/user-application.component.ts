@@ -13,24 +13,23 @@ import {WordListRestService} from '../services/wordListRest.service';
   ]
 })
 
+export class UserApplicationComponent implements OnInit {
+  active = false;
 
-export class UserApplicationComponent implements OnInit{
-
-  active: boolean = false;
   constructor(private router: Router,
-              private wordListService: WordListService){
+              private wordListService: WordListService) {
     this.router.navigate(['learn']);
   }
 
   ngOnInit() {
-    this.wordListService.getData()
+    this.wordListService.getData();
   }
   updateAndRemove(){
     this.wordListService.updateData();
     this.wordListService.removeData();
   }
 
-  menuToggle(){
+  menuToggle() {
     this.active = !this.active;
   }
 }

@@ -1,7 +1,7 @@
 export interface Word {
-  foreignWord: string,
-  nativeWord: string,
-  id: string
+  foreignWord: string;
+  nativeWord: string;
+  id: string;
 }
 
 export interface CreateWord extends Word {

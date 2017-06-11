@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Word} from '../models/word';
-import {Observable, Subject, BehaviorSubject} from "rxjs";
+import {Observable, Subject, BehaviorSubject} from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {WordListRestService} from './wordListRest.service';
@@ -8,7 +8,7 @@ import {WordListRestService} from './wordListRest.service';
 @Injectable()
 export class WordListService {
   wordList$: Observable<Word[]>;
-  private wordList : Subject<Word[]>;
+  private wordList: Subject<Word[]>;
   private dataStore: {
     wordList: Word[]
   };
@@ -21,7 +21,7 @@ export class WordListService {
     this.wordList$ = this.wordList.asObservable();
   }
 
-  getData(){
+  getData() {
     this.wordListRestService.getData().subscribe(data => {
         this.dataStore.wordList = data;
         this.wordList.next(Object.assign({}, this.dataStore).wordList);

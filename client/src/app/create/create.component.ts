@@ -1,14 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {EventEmitter} from "@angular/core";
-import {FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {Component, OnInit, HostListener} from '@angular/core';
+import {EventEmitter} from '@angular/core';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {CreateWord} from '../models/word';
-import {WordListService} from "../services/wordList.service";
+import {WordListService} from '../services/wordList.service';
 
 
 @Component({
-  host: {
-    '(document:click)': 'onClick($event)',
-  },
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
@@ -17,8 +14,9 @@ import {WordListService} from "../services/wordList.service";
 export class CreateComponent implements OnInit {
   wordList: CreateWord[];
   newWord: FormGroup;
-  activeList: boolean = false;
-  clickedWord: boolean = false;
+  activeList = false;
+  clickedWord = false;
+  public myFocusTriggeringEventEmitter = new EventEmitter<boolean>();
 
   constructor(private fb: FormBuilder,
               private wordListService: WordListService) {
@@ -26,14 +24,12 @@ export class CreateComponent implements OnInit {
 
     this.wordListService.wordList$
       .subscribe(results => {
-        let wordList = results.slice().reverse();
-        this.wordList = wordList.map(item => Object.assign({},item, {edit: false}));
+        const wordList = results.slice().reverse();
+        this.wordList = wordList.map(item => Object.assign({}, item, {edit: false}));
       });
   }
 
   ngOnInit() {}
-
-  public myFocusTriggeringEventEmitter = new EventEmitter<boolean>();
 
   createForm() {
     this.newWord = this.fb.group({
@@ -42,34 +38,33 @@ export class CreateComponent implements OnInit {
     });
   }
 
-  toggleActiveList() : void{
+  toggleActiveList(): void {
     this.activeList = !this.activeList;
   }
 
-  addNewWord() : void{
+  addNewWord(): void {
     this.wordListService.postData(this.newWord.value);
     this.createForm();
     this.myFocusTriggeringEventEmitter.emit(true);
   }
 
-  handleEditEvent(word){
+  handleEditEvent(word) {
     this.clickedWord = true;
-    if(word.edit) return;
+    if (word.edit) return;
     this.setAllWordEditFalse();
     word.edit = true;
   }
 
-  onClick(event){
-    if(this.clickedWord){
+  @HostListener('document:click') onClick(event) {
+    if (this.clickedWord) {
       this.clickedWord = false;
-      return
-    }else{
+      return;
+    } else {
       this.setAllWordEditFalse();
     }
-
   }
 
-  private setAllWordEditFalse(){
+  private setAllWordEditFalse() {
     this.wordList.map(item => item.edit = false);
   }
 }
