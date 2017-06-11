@@ -23,6 +23,7 @@
   &-header {
     $animateStartDistance: 1px;
     $animateEndDistance: -2px;
+    margin-right: 18px;
 
     /deep/ svg .clr-i-outline {
       transition: transform .4s ease;
