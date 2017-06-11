@@ -27,24 +27,24 @@ export class WordListRestService {
       .catch(this.handleServerError);
   }
 
-  updateData(listWord: Word[]){
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.http.put(`${API_URL}/word/list`,{ list: listWord }, options)
+  updateData(listWord: Word[]) {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({ headers: headers });
+    return this.http.put(`${API_URL}/word/list`, { list: listWord }, options)
       .map((res: Response) => res.json())
-      .catch(this.handleServerError)
+      .catch(this.handleServerError);
   }
 
-  removeData(listId: string[]){
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({
+  removeData(listId: string[]) {
+    const headers = new Headers({ 'Content-Type': 'application/json' });
+    const options = new RequestOptions({
       headers: headers,
-      body : {list:listId}
+      body : {list: listId}
     });
 
     return this.http.delete(`${API_URL}/word/list`, options)
       .map((res: Response) => res.json())
-      .catch(this.handleServerError)
+      .catch(this.handleServerError);
   }
 
   private handleServerError(err): Observable<Response> {

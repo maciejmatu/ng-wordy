@@ -46,7 +46,7 @@ export class WordComponent implements OnInit {
     this.createForm();
   }
 
-  remove(){
+  remove() {
     this.wordListService.removeWordInDataStore(this.word.id);
   }
 }
