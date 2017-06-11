@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run watch",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "watch": "nodemon --exec ts-node -- ./src/index.ts"
   },
   "author": "",
@@ -14,8 +15,10 @@
     "@types/express": "^4.0.35",
     "@types/mongoose": "^4.7.16",
     "@types/node": "^7.0.22",
+    "codelyzer": "^3.0.1",
     "nodemon": "^1.11.0",
     "ts-node": "^3.0.6",
+    "tslint": "^5.4.3",
     "typescript": "^2.3.4"
   },
   "dependencies": {
