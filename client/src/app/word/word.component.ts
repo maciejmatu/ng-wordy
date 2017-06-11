@@ -29,11 +29,11 @@ export class WordComponent implements OnInit {
     });
   }
 
-  toggleEdit(){
+  toggleEdit() {
     this.editEvent.emit(this.word);
   }
 
-  save(){
+  save() {
     this.word.edit = false;
     this.word.foreignWord = this.updateWord.value.foreignWord || this.word.foreignWord;
     this.word.nativeWord = this.updateWord.value.nativeWord || this.word.nativeWord;
@@ -41,7 +41,7 @@ export class WordComponent implements OnInit {
     this.createForm();
   }
 
-  cancel(){
+  cancel() {
     this.word.edit = false;
     this.createForm();
   }

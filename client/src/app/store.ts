@@ -7,12 +7,12 @@ export interface AppState {
 
 export const INITIAL_STATE: AppState = {
   langToggled: true
-}
+};
 
 export function rootReducer(lastState: AppState, action: Action): AppState {
-  switch(action.type) {
+  switch (action.type) {
     case LearnActions.TOGGLE_LANG:
-      return { langToggled: !lastState.langToggled }
+      return { langToggled: !lastState.langToggled };
     default:
       return lastState;
   }

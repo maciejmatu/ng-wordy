@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Word } from '../models/word';
-import { WordListService } from "../services/wordList.service";
+import { WordListService } from '../services/wordList.service';
 import { NgRedux } from '@angular-redux/store';
 import { LearnActions } from './learn.actions';
 import { AppState } from '../store';
@@ -13,7 +13,7 @@ import { AppState } from '../store';
 export class LearnComponent implements OnInit, OnDestroy {
   subscription;
   wordList: Word[];
-  currentId: number = 0;
+  currentId = 0;
   langToggled: boolean;
 
   constructor(private wordListService: WordListService,
@@ -23,7 +23,7 @@ export class LearnComponent implements OnInit, OnDestroy {
     this.subscription = this.ngRedux.select<boolean>('langToggled')
       .subscribe(toggled => this.langToggled = toggled);
 
-    this.wordListService.wordList$.subscribe( results =>{
+    this.wordListService.wordList$.subscribe( results => {
       this.wordList = results;
     });
 
@@ -39,8 +39,8 @@ export class LearnComponent implements OnInit, OnDestroy {
     this.ngRedux.dispatch(this.actions.toggleLang());
   }
 
-  showWordToGuess(){
-    return this.wordList[this.currentId] ? this.wordList[this.currentId][this.getLang(this.langToggled)] : ""
+  showWordToGuess() {
+    return this.wordList[this.currentId] ? this.wordList[this.currentId][this.getLang(this.langToggled)] : '';
   }
 
   getLang(switched: boolean = false) {
@@ -48,16 +48,16 @@ export class LearnComponent implements OnInit, OnDestroy {
   }
 
   changeWord(num = 1): void {
-    let nextId = this.currentId + num;
+    const nextId = this.currentId + num;
 
     if (this.wordList[nextId]) this.currentId += num;
   }
 
   onSubmit(value): void {
-    let currentWord = this.wordList[this.currentId][this.getLang(!this.langToggled)];
+    const currentWord = this.wordList[this.currentId][this.getLang(!this.langToggled)];
 
     if (value.toLocaleLowerCase() === currentWord.toLocaleLowerCase()) {
-      console.log('correct')
+      console.log('correct');
     }
   }
 
