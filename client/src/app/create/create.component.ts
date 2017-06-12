@@ -24,7 +24,7 @@ export class CreateComponent implements OnInit {
 
     this.wordListService.wordList$
       .subscribe(results => {
-        const wordList = results.slice().reverse();
+        const wordList = [...results].reverse();
         this.wordList = wordList.map(item => Object.assign({}, item, {edit: false}));
       });
   }

@@ -24,14 +24,14 @@ export class WordListService {
   getData() {
     this.wordListRestService.getData().subscribe(data => {
         this.dataStore.wordList = data;
-        this.wordList.next(Object.assign({}, this.dataStore).wordList);
+        this.wordList.next([...this.dataStore.wordList]);
       });
   }
 
   postData(word: Word) {
     this.wordListRestService.postData(word).subscribe(data => {
         this.dataStore.wordList.push(data);
-        this.wordList.next(Object.assign({}, this.dataStore).wordList);
+        this.wordList.next([...this.dataStore.wordList]);
       });
   }
 
@@ -44,19 +44,19 @@ export class WordListService {
         if (item.id === word.id) this.dataStashToUpDate.push(item);
       });
 
-    this.wordList.next(Object.assign({}, this.dataStore).wordList);
+    this.wordList.next([...this.dataStore.wordList]);
   }
 
   removeWordInDataStore(id: string) {
     this.dataStore.wordList
-      .filter(item => {
+      .forEach(item => {
         if (item.id === id) this.dataStashToRemove.push(id);
       });
 
     this.dataStore.wordList = this.dataStore.wordList
       .filter(item => item.id !== id);
 
-    this.wordList.next(Object.assign({}, this.dataStore).wordList);
+    this.wordList.next([...this.dataStore.wordList]);
   }
 
   updateData() {
