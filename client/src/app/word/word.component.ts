@@ -1,7 +1,7 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {CreateWord} from '../models/word';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {WordListService} from '../services/wordList.service';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { CreateWord } from '../models/word';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { WordListService } from '../services/wordList.service';
 
 @Component({
   selector: 'app-word',

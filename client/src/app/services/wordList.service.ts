@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Word} from '../models/word';
-import {Observable, Subject, BehaviorSubject} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Word } from '../models/word';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { WordListRestService } from './wordListRest.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
-import {WordListRestService} from './wordListRest.service';
 
 @Injectable()
 export class WordListService {

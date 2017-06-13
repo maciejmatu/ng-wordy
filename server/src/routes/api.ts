@@ -1,5 +1,5 @@
-import {Router, Request, Response} from 'express';
-import WordModel, {Word} from '../models/wordModel';
+import { Router, Request, Response } from 'express';
+import WordModel, { Word } from '../models/wordModel';
 import * as mongoose from 'mongoose';
 
 const router: Router = Router();
@@ -14,7 +14,7 @@ router.post('/word/add', (req: Request, res: Response) => {
   const newWord = req.body.word;
 
   if (!newWord.foreignWord && !newWord.nativeWord) {
-    return res.status(400).json({'error': 'Bad Data'});
+    return res.status(400).json({ 'error': 'Bad Data' });
   }
 
   const word = new WordModel({
