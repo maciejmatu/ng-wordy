@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Http, Response, Headers, RequestOptions} from '@angular/http';
-import {Word} from '../models/word';
-import {Observable } from 'rxjs';
-import {API_URL} from '../config';
+import { Injectable } from '@angular/core';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Word } from '../models/word';
+import { Observable } from 'rxjs';
+import { API_URL } from '../config';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
@@ -39,7 +39,7 @@ export class WordListRestService {
     const headers = new Headers({ 'Content-Type': 'application/json' });
     const options = new RequestOptions({
       headers: headers,
-      body : {list: listId}
+      body: { list: listId }
     });
 
     return this.http.delete(`${API_URL}/word/list`, options)

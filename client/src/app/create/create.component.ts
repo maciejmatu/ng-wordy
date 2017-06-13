@@ -1,8 +1,8 @@
-import {Component, OnInit, HostListener} from '@angular/core';
-import {EventEmitter} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import {CreateWord} from '../models/word';
-import {WordListService} from '../services/wordList.service';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CreateWord } from '../models/word';
+import { WordListService } from '../services/wordList.service';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class CreateComponent implements OnInit {
     this.wordListService.wordList$
       .subscribe(results => {
         const wordList = [...results].reverse();
-        this.wordList = wordList.map(item => Object.assign({}, item, {edit: false}));
+        this.wordList = wordList.map(item => Object.assign({}, item, { edit: false }));
       });
   }
 

@@ -32,7 +32,7 @@ export class Server {
     mongoose.connect(config.database);
 
     this.app.set('port', config.port);
-    this.app.listen(config.port, _ => console.log(`API running on http://${config.serverHost}:${config.port}`));
+    this.app.listen(config.port, _ => console.log(`API running on http://${ config.serverHost }:${ config.port }`));
   }
 
   /**
@@ -45,7 +45,7 @@ export class Server {
     this.app.use('/api', api);
 
     this.app.get('*', (req, res) => {
-      res.json({'message': 'Welcome to Wordy REST Api'});
+      res.json({ 'message': 'Welcome to Wordy REST Api' });
     });
   }
 

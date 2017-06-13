@@ -1,8 +1,15 @@
 {
+  "extends": [
+    "tslint-eslint-rules"
+  ],
   "rulesDirectory": [
     "node_modules/codelyzer"
   ],
   "rules": {
+    "object-curly-spacing": [
+      true,
+      "always"
+    ],
     "callable-types": true,
     "class-name": true,
     "comment-format": [
