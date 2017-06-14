@@ -13,7 +13,9 @@ import { UserApplicationComponent } from './user-application/user-application.co
 import { LoginComponent } from './login/login.component';
 import { LearnComponent } from './learn/learn.component';
 import { CreateComponent } from './create/create.component';
-import { FocusDirective } from './focus.directive';
+import { FocusDirective } from './directives/focus.directive';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
+
 import { ReversePipe } from './pipes/reverse.pipe';
 
 import { rootReducer, AppState, INITIAL_STATE } from './store';
@@ -28,6 +30,7 @@ import { WordComponent } from './word/word.component';
     LearnComponent,
     CreateComponent,
     FocusDirective,
+    ClickOutsideDirective,
     ReversePipe,
     WordComponent
   ],
