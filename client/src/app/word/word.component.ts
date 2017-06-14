@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CreateWord } from '../models/word';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { WordListService } from '../services/wordList.service';
@@ -11,26 +11,21 @@ import { WordListService } from '../services/wordList.service';
 
 export class WordComponent implements OnInit {
   @Input() word: CreateWord;
-  @Output() editEvent: EventEmitter<CreateWord> = new EventEmitter<CreateWord>();
   updateWord: FormGroup;
+  clickedFirstTime = false;
 
   constructor(private fb: FormBuilder,
               private wordListService: WordListService) {
     this.createForm();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   createForm() {
     this.updateWord = this.fb.group({
       foreignWord: '',
       nativeWord: '',
     });
-  }
-
-  toggleEdit() {
-    this.editEvent.emit(this.word);
   }
 
   save() {
@@ -44,6 +39,21 @@ export class WordComponent implements OnInit {
   cancel() {
     this.word.edit = false;
     this.createForm();
+  }
+
+  toggleEdit() {
+    if(!this.word.edit){
+      this.clickedFirstTime = true;
+      this.word.edit = true;
+    }
+  }
+
+  clickOutside(){
+    if(!this.clickedFirstTime){
+      this.word.edit = false;
+    }else{
+      this.clickedFirstTime = false;
+    }
   }
 
   remove() {

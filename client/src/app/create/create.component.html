@@ -20,7 +20,7 @@
             <dt class="stack-block-label" (click)='toggleActiveList()'>Current Set <span class="badge badge-purple">{{ wordList.length }}</span></dt>
             <dd class="stack-block-content"></dd>
             <div class="stack-children" *ngIf='activeList'>
-                <app-word class="stack-block" *ngFor='let word of wordList' [word]='word' (editEvent)='handleEditEvent($event)'></app-word>
+                <app-word class="stack-block" *ngFor='let word of wordList' [word]='word'></app-word>
             </div>
           </div>
         </dl>

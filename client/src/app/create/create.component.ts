@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CreateWord } from '../models/word';
@@ -15,7 +15,6 @@ export class CreateComponent implements OnInit {
   wordList: CreateWord[];
   newWord: FormGroup;
   activeList = false;
-  clickedWord = false;
   public myFocusTriggeringEventEmitter = new EventEmitter<boolean>();
 
   constructor(private fb: FormBuilder,
@@ -46,25 +45,5 @@ export class CreateComponent implements OnInit {
     this.wordListService.postData(this.newWord.value);
     this.createForm();
     this.myFocusTriggeringEventEmitter.emit(true);
-  }
-
-  handleEditEvent(word) {
-    this.clickedWord = true;
-    if (word.edit) return;
-    this.setAllWordEditFalse();
-    word.edit = true;
-  }
-
-  @HostListener('document:click') onClick(event) {
-    if (this.clickedWord) {
-      this.clickedWord = false;
-      return;
-    } else {
-      this.setAllWordEditFalse();
-    }
-  }
-
-  private setAllWordEditFalse() {
-    this.wordList.map(item => item.edit = false);
   }
 }
