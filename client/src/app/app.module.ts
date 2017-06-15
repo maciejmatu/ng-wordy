@@ -18,9 +18,11 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
 
 import { ReversePipe } from './pipes/reverse.pipe';
 
-import { rootReducer, AppState, INITIAL_STATE } from './store';
+import { store, AppState } from './store/index';
 import { LearnActions } from './learn/learn.actions';
 import { WordComponent } from './word/word.component';
+import { WordListActions } from './services/word-list.actions';
+import { WordListRestService } from './services/word-list-rest.service';
 
 @NgModule({
   declarations: [
@@ -45,11 +47,14 @@ import { WordComponent } from './word/word.component';
     AppRoutingModule,
     UserApplicationRoutingModule
   ],
-  providers: [LearnActions],
+  providers: [
+    LearnActions,
+    WordListRestService,
+    WordListActions],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(ngRedux: NgRedux<AppState>) {
-    ngRedux.configureStore(rootReducer, INITIAL_STATE);
+    ngRedux.provideStore(store);
   }
 }

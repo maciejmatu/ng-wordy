@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CreateWord } from '../models/word';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { WordListService } from '../services/word-list.service';
+import { WordListActions } from '../services/word-list.actions';
 
 @Component({
   selector: 'app-word',
@@ -15,7 +15,7 @@ export class WordComponent implements OnInit {
   clickedFirstTime = false;
 
   constructor(private fb: FormBuilder,
-              private wordListService: WordListService) {
+              private wordListActions: WordListActions) {
     this.createForm();
   }
 
@@ -32,7 +32,7 @@ export class WordComponent implements OnInit {
     this.word.edit = false;
     this.word.foreignWord = this.updateWord.value.foreignWord || this.word.foreignWord;
     this.word.nativeWord = this.updateWord.value.nativeWord || this.word.nativeWord;
-    this.wordListService.updateWordInDataStore(this.word);
+    this.wordListActions.updateWord(this.word);
     this.createForm();
   }
 
@@ -57,6 +57,6 @@ export class WordComponent implements OnInit {
   }
 
   remove() {
-    this.wordListService.removeWordInDataStore(this.word.id);
+    this.wordListActions.removeWord(this.word.id);
   }
 }

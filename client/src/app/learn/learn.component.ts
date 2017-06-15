@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Word } from '../models/word';
-import { WordListService } from '../services/word-list.service';
-import { NgRedux } from '@angular-redux/store';
+import { NgRedux, select } from '@angular-redux/store';
 import { LearnActions } from './learn.actions';
 import { AppState } from '../store';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-learn',
@@ -11,32 +11,36 @@ import { AppState } from '../store';
   styleUrls: ['./learn.component.scss']
 })
 export class LearnComponent implements OnInit, OnDestroy {
-  subscription;
+  private ngUnsubscribe: Subject<void> = new Subject<void>();
+
+  @select('langToggled') langToggled$: Observable<boolean>;
+  @select('wordList') wordList$: Observable<Word[]>;
+
   wordList: Word[];
   currentId = 0;
   langToggled: boolean;
 
-  constructor(private wordListService: WordListService,
-    private ngRedux: NgRedux<AppState>,
-    private actions: LearnActions) {
-
-    this.subscription = this.ngRedux.select<boolean>('langToggled')
-      .subscribe(toggled => this.langToggled = toggled);
-
-    this.wordListService.wordList$.subscribe( results => {
-      this.wordList = results;
-    });
-
+  constructor(private ngRedux: NgRedux<AppState>,
+              private learnActions: LearnActions) {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.langToggled$
+      .takeUntil(this.ngUnsubscribe)
+      .subscribe(toggled => this.langToggled = toggled);
+
+    this.wordList$
+      .takeUntil(this.ngUnsubscribe)
+      .subscribe( wordList => this.wordList = wordList);
+  }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   toggleLanguage(): void {
-    this.ngRedux.dispatch(this.actions.toggleLang());
+    this.learnActions.toggleLang();
   }
 
   showWordToGuess() {
