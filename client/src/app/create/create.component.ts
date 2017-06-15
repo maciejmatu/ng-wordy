@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CreateWord } from '../models/word';
-import { WordListService } from '../services/word-list.service';
+import { CreateWord, Word } from '../models/word';
+import { Observable } from 'rxjs';
+import { select } from '@angular-redux/store';
+import { WordListActions } from '../services/word-list.actions';
 
 
 @Component({
@@ -11,24 +13,28 @@ import { WordListService } from '../services/word-list.service';
   styleUrls: ['./create.component.scss']
 })
 
-export class CreateComponent implements OnInit {
+export class CreateComponent implements OnInit, OnDestroy {
+  @select('wordList') wordList$: Observable<Word[]>;
+  subscription;
   wordList: CreateWord[];
   newWord: FormGroup;
   activeList = false;
   public myFocusTriggeringEventEmitter = new EventEmitter<boolean>();
 
   constructor(private fb: FormBuilder,
-              private wordListService: WordListService) {
-    this.createForm();
-
-    this.wordListService.wordList$
-      .subscribe(results => {
-        const wordList = [...results].reverse();
-        this.wordList = wordList.map(item => Object.assign({}, item, { edit: false }));
-      });
+              private wordListActions: WordListActions) {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.createForm();
+    this.subscription = this.wordList$
+      .map(wordList => wordList.map(word => Object.assign({}, word, { edit: false })))
+      .subscribe(wordList => this.wordList = [...wordList].reverse());
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   createForm() {
     this.newWord = this.fb.group({
@@ -42,7 +48,7 @@ export class CreateComponent implements OnInit {
   }
 
   addNewWord(): void {
-    this.wordListService.postData(this.newWord.value);
+    this.wordListActions.postData(this.newWord.value);
     this.createForm();
     this.myFocusTriggeringEventEmitter.emit(true);
   }

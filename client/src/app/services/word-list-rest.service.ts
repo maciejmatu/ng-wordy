@@ -32,6 +32,19 @@ export class WordListRestService {
       .catch(this.handleServerError);
   }
 
+  updateWord(word: Word) {
+    return this.http.put(`${API_URL}/word/${word.id}`, { word }, this.options)
+      .map((res: Response) => res.json())
+      .catch(this.handleServerError);
+  }
+
+  removeWord(id: string) {
+    return this.http.delete(`${API_URL}/word/${id}`, this.options)
+      .map((res: Response) => res.json())
+      .catch(this.handleServerError);
+  }
+
+
   updateData(listWord: Word[]) {
     return this.http.put(`${API_URL}/word/list`, { list: listWord },  this.options)
       .map((res: Response) => res.json())
