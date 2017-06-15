@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CreateWord } from '../models/word';
-import { WordListService } from '../services/wordList.service';
+import { WordListService } from '../services/word-list.service';
 
 
 @Component({

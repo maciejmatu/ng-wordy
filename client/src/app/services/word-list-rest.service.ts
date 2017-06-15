@@ -6,11 +6,18 @@ import { API_URL } from '../config';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+interface Options {
+  headers: Headers
+}
+
 @Injectable()
 export class WordListRestService {
+  options: Options;
 
   constructor(private http: Http) {
-
+    this.options = new RequestOptions({
+      headers: new Headers({'Content-Type': 'application/json'})
+    });
   }
 
   getData(): Observable<Word[]> {
@@ -20,27 +27,19 @@ export class WordListRestService {
   }
 
   postData(word: Word): Observable<Word> {
-    const headers = new Headers({ 'Content-Type': 'application/json' });
-    const options = new RequestOptions({ headers: headers });
-    return this.http.post(`${API_URL}/word/add`, { word }, options)
+    return this.http.post(`${API_URL}/word/add`, { word }, this.options)
       .map((res: Response) => res.json())
       .catch(this.handleServerError);
   }
 
   updateData(listWord: Word[]) {
-    const headers = new Headers({ 'Content-Type': 'application/json' });
-    const options = new RequestOptions({ headers: headers });
-    return this.http.put(`${API_URL}/word/list`, { list: listWord }, options)
+    return this.http.put(`${API_URL}/word/list`, { list: listWord },  this.options)
       .map((res: Response) => res.json())
       .catch(this.handleServerError);
   }
 
   removeData(listId: string[]) {
-    const headers = new Headers({ 'Content-Type': 'application/json' });
-    const options = new RequestOptions({
-      headers: headers,
-      body: { list: listId }
-    });
+    const options = Object.assign({} , this.options, {body: { list: listId }});
 
     return this.http.delete(`${API_URL}/word/list`, options)
       .map((res: Response) => res.json())
