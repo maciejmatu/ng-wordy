@@ -4,17 +4,68 @@ import * as mongoose from 'mongoose';
 
 const router: Router = Router();
 
-router.get('/word/list', (req: Request, res: Response) => {
-  WordModel.find()
-    .then((words: Word[]) => res.json(words))
-    .catch(err => res.send(err));
-});
+router.route('/word/list')
+  .get(async (req: Request, res: Response) => {
+    try {
+      const foundList: Word[] = await WordModel.find();
 
-router.post('/word/add', (req: Request, res: Response) => {
+      res.json(foundList);
+    } catch(err) {
+      res.send(err);
+    }
+  })
+
+  .put(async (req: Request, res: Response) => {
+    const updatedList = req.body.list;
+
+    if (!Array.isArray(updatedList)) {
+      return res.status(400).json({'error': 'Bad Data'});
+    }
+
+    try{
+      updatedList.forEach(async (word, index) => {
+        const updated: Word = await WordModel.findOneAndUpdate({id: word.id}, word, {new: true});
+
+        if (index === updatedList.length - 1) {
+          const foundList: Word[] = await WordModel.find();
+
+          res.json(foundList);
+        }
+      });
+    }catch(err) {
+      res.send(err);
+    }
+  })
+
+  .delete(async (req: Request, res: Response) => {
+    const deleteList = req.body.list;
+
+    if (!Array.isArray(deleteList)) {
+      return res.status(400).json({'error': 'Bad Data'});
+    }
+
+    try{
+      deleteList.forEach(async (id, index) => {
+        const word: Word = await WordModel.findOne({id: id}, null, {limit: 1});
+
+        word.remove();
+        if (index === deleteList.length - 1) {
+          const foundList: Word[] = await WordModel.find();
+
+          res.json(foundList);
+        }
+      });
+    }catch(err) {
+      res.send(err);
+    }
+  });
+
+router.route('/word/add')
+  .post(async (req: Request, res: Response) => {
   const newWord = req.body.word;
 
   if (!newWord.foreignWord && !newWord.nativeWord) {
-    return res.status(400).json({ 'error': 'Bad Data' });
+    return res.status(400).json({'error': 'Bad Data'});
   }
 
   const word = new WordModel({
@@ -23,55 +74,48 @@ router.post('/word/add', (req: Request, res: Response) => {
     id: new mongoose.Types.ObjectId
   });
 
-  word.save()
-    .then((word: Word) => res.json(word))
-    .catch(err => res.send(err));
+  try {
+    const saved: Word = await word.save();
+
+    res.json(saved);
+  } catch(err) {
+    res.send(err);
+  }
 });
 
-router.put('/word/list', (req: Request, res: Response) => {
-  const updatedList = req.body.list;
+router.route('/word/:id')
+  .get(async (req: Request, res: Response) => {
+    try {
+      const foundWord: Word = await WordModel.findOne({id: req.params.id});
 
-  if (!Array.isArray(updatedList)) {
-    return res.status(400).json({'error': 'Bad Data'});
-  }
+      if (!foundWord) return res.json({'message': 'No word found'});
 
-  for (let i = 0; i < updatedList.length; i++) {
-    WordModel.update({'id': updatedList[i].id}, updatedList[i])
-      .catch(err => res.send(err));
-  }
+      res.json(foundWord);
+    } catch(err) {
+      res.send(err);
+    }
+  })
+  .put(async (req: Request, res: Response) => {
+    try {
+      const updated: Word = await WordModel.findOneAndUpdate({id: req.params.id}, req.body.word, {new: true});
 
-  WordModel.find()
-    .then((words: Word[]) => res.json(words))
-    .catch(err => res.send(err));
-});
+      if (!updated) return res.json({'message': 'No word found'});
 
-router.delete('/word/list', (req: Request, res: Response) => {
-  const deleteList = req.body.list;
+      res.json(updated);
+    } catch(err) {
+      res.send(err);
+    }
+  })
+  .delete(async (req: Request, res: Response) => {
+    try {
+      const deleted: Word = await WordModel.findOneAndRemove({id: req.params.id});
 
-  if (!Array.isArray(deleteList)) {
-    return res.status(400).json({'error': 'Bad Data'});
-  }
+      if (!deleted) return res.json({'message': 'No word found'});
 
-  function removeList() {
-    return new Promise((resolve) => {
-      deleteList.forEach((id, index) => {
-        WordModel.findOne({id: id}, null, {limit: 1})
-          .then((word: Word) => {
-            word.remove();
-            if (index === deleteList.length - 1) resolve()
-          })
-          .catch(err => res.send(err));
-      });
-
-    })
-  }
-
-  removeList().then(() => {
-    WordModel.find()
-      .then((words: Word[]) => res.json(words))
-      .catch(err => res.send(err))
+      res.json(deleted);
+    } catch(err) {
+      res.send(err);
+    }
   });
-
-});
 
 export default router;
