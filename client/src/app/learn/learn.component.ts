@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Word } from '../models/word';
-import { WordListService } from '../services/wordList.service';
+import { WordListService } from '../services/word-list.service';
 import { NgRedux } from '@angular-redux/store';
 import { LearnActions } from './learn.actions';
 import { AppState } from '../store';
