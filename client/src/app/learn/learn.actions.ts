@@ -9,7 +9,7 @@ export class LearnActions {
   constructor(private ngRedux: NgRedux<AppState>){
 
   }
-  toggleLang() {
+  toggleLanguage() {
     this.ngRedux.dispatch({ type: LearnActions.TOGGLE_LANG });
   }
 }
