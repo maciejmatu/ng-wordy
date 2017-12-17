@@ -33,6 +33,8 @@ We try to follow this typescript style guide, to maintain clean code:<br>
 [Basarat Typescript Style Guide](https://basarat.gitbooks.io/typescript/docs/styleguide/styleguide.html)
 
 ## Development
+Make sure you have mongoDB instance up and running. It should be run on: mongodb://localhost:27017 or you can set up it in DATABASE_URL env variable.
+
 In order to develop application, one must run "npm start" from 'client' and from 'server' directory.
 It will start frontend and backend development servers that talk to each other.
 
